@@ -1,5 +1,0 @@
-﻿fastapi
-uvicorn[standard]
-transformers
-gradio
-torch
