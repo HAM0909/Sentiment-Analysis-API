@@ -60,12 +60,21 @@ A powerful and easy-to-use REST API for analyzing sentiment in text using state-
 
 3. **Install dependencies**
    ```bash
-   pip install -r requirements.txt
+   # Install from app directory
+   pip install -r app/requirements.txt
+   
+   # Or for Hugging Face version
+   pip install -r huggingface/requirements.txt
    ```
 
 4. **Run the API**
    ```bash
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   # From the app directory
+   cd app
+   python main.py
+   
+   # Or using uvicorn directly
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
    ```
 
 5. **Access the API**
@@ -75,15 +84,21 @@ A powerful and easy-to-use REST API for analyzing sentiment in text using state-
 
 ### Method 2: Docker Deployment
 
-1. **Build the Docker image**
-   ```bash
-   docker build -t sentiment-analysis-api .
-   ```
+You have two Docker options:
 
-2. **Run the container**
-   ```bash
-   docker run -p 8000:8000 sentiment-analysis-api
-   ```
+#### Option A: Main App
+```bash
+cd app
+docker build -t sentiment-analysis-api .
+docker run -p 8000:8000 sentiment-analysis-api
+```
+
+#### Option B: Hugging Face Version
+```bash
+cd huggingface
+docker build -t sentiment-analysis-hf .
+docker run -p 8000:8000 sentiment-analysis-hf
+```
 
 ## 📚 API Documentation
 
@@ -263,35 +278,23 @@ You can add custom Hugging Face models by updating the `models.json` configurati
 ```
 Sentiment-Analysis-API/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py              # FastAPI application
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── sentiment.py     # Sentiment analysis logic
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   └── analysis.py      # API endpoints
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── config.py        # Configuration settings
-│   │   └── dependencies.py  # Shared dependencies
-│   └── utils/
-│       ├── __init__.py
-│       └── helpers.py       # Utility functions
-├── huggingface/             # Model cache directory
-├── docs/                    # Additional documentation
-├── examples/               # Usage examples
-│   ├── python_client.py
-│   ├── curl_examples.sh
-│   └── javascript_client.js
-├── tests/                  # Unit tests
-├── Dockerfile             # Docker configuration
-├── docker-compose.yml     # Docker Compose setup
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
-├── .gitignore            # Git ignore rules
-├── LICENSE.txt           # MIT License
-└── README.md             # Project documentation
+│   ├── .dockerignore        # Docker ignore rules
+│   ├── app.py              # Alternative Flask/FastAPI app
+│   ├── main.py             # Main FastAPI application
+│   ├── index.html          # Web interface
+│   ├── Dockerfile          # Docker configuration for app
+│   └── requirements.txt    # App-specific dependencies
+├── huggingface/            # Hugging Face implementation
+│   ├── app.py             # HF-specific application
+│   ├── Dockerfile         # Docker config for HF version
+│   ├── README.md          # HF-specific documentation
+│   └── requirements.txt   # HF-specific dependencies
+├── docs/                  # Additional documentation
+├── examples/             # Usage examples and demos
+├── venv/                 # Python virtual environment
+├── .gitignore           # Git ignore rules
+├── LICENSE.txt          # MIT License
+└── README.md            # Main project documentation
 ```
 
 ## 🧪 Testing
